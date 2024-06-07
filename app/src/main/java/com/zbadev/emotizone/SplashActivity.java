@@ -13,12 +13,13 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         int delay=3000;
+        // Delay de 3 segundos antes de pasar a la siguiente actividad
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                 finish();
             }
-        },delay);
+        },delay); // 3000 milisegundos = 3 segundos
     }
 }
