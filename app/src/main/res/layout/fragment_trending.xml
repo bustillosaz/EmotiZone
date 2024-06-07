@@ -12,6 +12,6 @@
         android:text="Trending"
         android:textSize="36sp"
         android:gravity="center"
-        android:textColor="@color/white"/>
+        android:textColor="@color/BlueNormal"/>
 
 </FrameLayout>

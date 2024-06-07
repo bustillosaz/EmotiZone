@@ -48,23 +48,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bottomNavigationView=findViewById(R.id.bottom_navigation);
         bottomNavigationView.setBackground(null);
 
+
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                //handleNavigation(item.getItemId());
                 int itemId=item.getItemId();
                 if (itemId==R.id.bottom_home){
                     openFragment(new HomeFragment());
+                    navigationView.setCheckedItem(R.id.nav_home);
                     return true;
-                }else if (itemId==R.id.bottom_shorts){
+                }else if (itemId==R.id.bottom_modules){
                     openFragment(new ShortsFragment());
+                    navigationView.setCheckedItem(R.id.nav_modules);
                     return true;
-                }else if (itemId==R.id.bottom_subscription){
+                }else if (itemId==R.id.bottom_calendar){
                     openFragment(new SubscriptionFragment());
+                    navigationView.setCheckedItem(R.id.nav_calendar);
                     return true;
-                }else if (itemId==R.id.bottom_library){
+                }else if (itemId==R.id.bottom_me){
                     openFragment(new LibraryFragment());
+                    navigationView.setCheckedItem(R.id.nav_me);
                     return true;
                 }
+
                 return true;
             }
         });
@@ -83,26 +90,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        //handleNavigation(item.getItemId());
         int itenId=item.getItemId();
-        if(itenId == R.id.nav_trending){
+        if(itenId == R.id.nav_home){
             openFragment(new TrendingFragment());
-            //clearBottomNavigationSelection();
-        }else if(itenId == R.id.nav_music){
+            bottomNavigationView.setSelectedItemId(R.id.bottom_home);
+        }else if(itenId == R.id.nav_modules){
             openFragment(new MusicFragment());
-            //clearBottomNavigationSelection();
-        }else if(itenId == R.id.nav_gaming){
+            bottomNavigationView.setSelectedItemId(R.id.bottom_modules);
+        }else if(itenId == R.id.nav_calendar){
             openFragment(new GamingFragment());
-            //clearBottomNavigationSelection();
-        }else if(itenId == R.id.nav_movies){
-            Toast.makeText(this, "Movies", Toast.LENGTH_SHORT).show();
-        } else if(itenId == R.id.nav_news){
-            Toast.makeText(this, "News", Toast.LENGTH_SHORT).show();
-        }else if(itenId == R.id.nav_sports){
-            Toast.makeText(this, "Sports", Toast.LENGTH_SHORT).show();
+            bottomNavigationView.setSelectedItemId(R.id.bottom_calendar);
+        }else if(itenId == R.id.nav_me){
+            openFragment(new TrendingFragment());
+            bottomNavigationView.setSelectedItemId(R.id.bottom_me);
+        } else if(itenId == R.id.nav_chatbot){
+            Toast.makeText(this, "Chatbot", Toast.LENGTH_SHORT).show();
+            clearBottomNavigationSelection();
+        }else if(itenId == R.id.nav_stadistics){
+            Toast.makeText(this, "Syadistics", Toast.LENGTH_SHORT).show();
+            clearBottomNavigationSelection();
         }else if(itenId == R.id.nav_logout){
             Toast.makeText(this, "Cerrar sesion", Toast.LENGTH_SHORT).show();
+            clearBottomNavigationSelection();
         }
-
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -119,7 +130,55 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void openFragment(Fragment fragment){
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
-        //transaction.addToBackStack(null);
+        transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    /*private void handleNavigation(int itemId) {
+
+        Fragment fragment = null;
+
+        if (itemId == R.id.bottom_home || itemId == R.id.nav_home) {
+            fragment = new HomeFragment();
+            //bottomNavigationView.setSelectedItemId(R.id.bottom_home);
+            //navigationView.setCheckedItem(R.id.nav_home);
+        } else if (itemId == R.id.bottom_modules || itemId == R.id.nav_modules) {
+            fragment = new ShortsFragment();
+            //bottomNavigationView.setSelectedItemId(R.id.bottom_modules);
+            //navigationView.setCheckedItem(R.id.nav_modules);
+        } else if (itemId == R.id.bottom_calendar || itemId == R.id.nav_calendar) {
+            fragment = new SubscriptionFragment();
+            //bottomNavigationView.setSelectedItemId(R.id.bottom_calendar);
+            //navigationView.setCheckedItem(R.id.nav_calendar);
+        } else if (itemId == R.id.bottom_me || itemId == R.id.nav_me) {
+            fragment = new LibraryFragment();
+            //bottomNavigationView.setSelectedItemId(R.id.bottom_me);
+            //navigationView.setCheckedItem(R.id.nav_me);
+        } else if (itemId == R.id.nav_chatbot) {
+            Toast.makeText(this, "ChatBot", Toast.LENGTH_SHORT).show();
+            clearBottomNavigationSelection();
+            return;
+        } else if (itemId == R.id.nav_stadistics) {
+            Toast.makeText(this, "Estadisticas", Toast.LENGTH_SHORT).show();
+            clearBottomNavigationSelection();
+            return;
+        } else if (itemId == R.id.nav_logout) {
+            Toast.makeText(this, "Cerrar sesion", Toast.LENGTH_SHORT).show();
+            clearBottomNavigationSelection();
+            return;
+        } else {
+            return;
+        }
+
+        // Abre el fragmento seleccionado
+        openFragment(fragment);
+    }*/
+
+    private void clearBottomNavigationSelection() {
+        bottomNavigationView.getMenu().setGroupCheckable(0, true, false);
+        for (int i = 0; i < bottomNavigationView.getMenu().size(); i++) {
+            bottomNavigationView.getMenu().getItem(i).setChecked(false);
+        }
+        bottomNavigationView.getMenu().setGroupCheckable(0, true, true);
     }
 }
