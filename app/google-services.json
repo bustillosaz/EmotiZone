@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "125193258454",
+    "project_id": "emotizone-e569e",
+    "storage_bucket": "emotizone-e569e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:125193258454:android:89664145c38fef088b1077",
+        "android_client_info": {
+          "package_name": "com.zbadev.emotizone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoZndubOS1rhr_Sby-WI8M-oD11-i-INM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
