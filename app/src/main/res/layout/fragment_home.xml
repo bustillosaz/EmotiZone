@@ -12,6 +12,6 @@
         android:text="Home"
         android:textSize="36sp"
         android:gravity="center"
-        android:textColor="@color/BlueNormal"/>
+        android:textColor="@color/BlueLight"/>
 
 </FrameLayout>

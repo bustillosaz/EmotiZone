@@ -59,15 +59,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     navigationView.setCheckedItem(R.id.nav_home);
                     return true;
                 }else if (itemId==R.id.bottom_modules){
-                    openFragment(new ShortsFragment());
+                    openFragment(new ModulesFragment());
                     navigationView.setCheckedItem(R.id.nav_modules);
                     return true;
                 }else if (itemId==R.id.bottom_calendar){
-                    openFragment(new SubscriptionFragment());
+                    openFragment(new CalendarFragment());
                     navigationView.setCheckedItem(R.id.nav_calendar);
                     return true;
                 }else if (itemId==R.id.bottom_me){
-                    openFragment(new LibraryFragment());
+                    openFragment(new PerfilFragment());
                     navigationView.setCheckedItem(R.id.nav_me);
                     return true;
                 }
@@ -93,22 +93,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //handleNavigation(item.getItemId());
         int itenId=item.getItemId();
         if(itenId == R.id.nav_home){
-            openFragment(new TrendingFragment());
+            openFragment(new HomeFragment());
             bottomNavigationView.setSelectedItemId(R.id.bottom_home);
         }else if(itenId == R.id.nav_modules){
-            openFragment(new MusicFragment());
+            openFragment(new ModulesFragment());
             bottomNavigationView.setSelectedItemId(R.id.bottom_modules);
         }else if(itenId == R.id.nav_calendar){
-            openFragment(new GamingFragment());
+            openFragment(new CalendarFragment());
             bottomNavigationView.setSelectedItemId(R.id.bottom_calendar);
         }else if(itenId == R.id.nav_me){
-            openFragment(new TrendingFragment());
+            openFragment(new PerfilFragment());
             bottomNavigationView.setSelectedItemId(R.id.bottom_me);
         } else if(itenId == R.id.nav_chatbot){
             Toast.makeText(this, "Chatbot", Toast.LENGTH_SHORT).show();
             clearBottomNavigationSelection();
         }else if(itenId == R.id.nav_stadistics){
-            Toast.makeText(this, "Syadistics", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Estadisticas", Toast.LENGTH_SHORT).show();
             clearBottomNavigationSelection();
         }else if(itenId == R.id.nav_logout){
             Toast.makeText(this, "Cerrar sesion", Toast.LENGTH_SHORT).show();
@@ -134,46 +134,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         transaction.commit();
     }
 
-    /*private void handleNavigation(int itemId) {
-
-        Fragment fragment = null;
-
-        if (itemId == R.id.bottom_home || itemId == R.id.nav_home) {
-            fragment = new HomeFragment();
-            //bottomNavigationView.setSelectedItemId(R.id.bottom_home);
-            //navigationView.setCheckedItem(R.id.nav_home);
-        } else if (itemId == R.id.bottom_modules || itemId == R.id.nav_modules) {
-            fragment = new ShortsFragment();
-            //bottomNavigationView.setSelectedItemId(R.id.bottom_modules);
-            //navigationView.setCheckedItem(R.id.nav_modules);
-        } else if (itemId == R.id.bottom_calendar || itemId == R.id.nav_calendar) {
-            fragment = new SubscriptionFragment();
-            //bottomNavigationView.setSelectedItemId(R.id.bottom_calendar);
-            //navigationView.setCheckedItem(R.id.nav_calendar);
-        } else if (itemId == R.id.bottom_me || itemId == R.id.nav_me) {
-            fragment = new LibraryFragment();
-            //bottomNavigationView.setSelectedItemId(R.id.bottom_me);
-            //navigationView.setCheckedItem(R.id.nav_me);
-        } else if (itemId == R.id.nav_chatbot) {
-            Toast.makeText(this, "ChatBot", Toast.LENGTH_SHORT).show();
-            clearBottomNavigationSelection();
-            return;
-        } else if (itemId == R.id.nav_stadistics) {
-            Toast.makeText(this, "Estadisticas", Toast.LENGTH_SHORT).show();
-            clearBottomNavigationSelection();
-            return;
-        } else if (itemId == R.id.nav_logout) {
-            Toast.makeText(this, "Cerrar sesion", Toast.LENGTH_SHORT).show();
-            clearBottomNavigationSelection();
-            return;
-        } else {
-            return;
-        }
-
-        // Abre el fragmento seleccionado
-        openFragment(fragment);
-    }*/
-
     private void clearBottomNavigationSelection() {
         bottomNavigationView.getMenu().setGroupCheckable(0, true, false);
         for (int i = 0; i < bottomNavigationView.getMenu().size(); i++) {
@@ -181,4 +141,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         bottomNavigationView.getMenu().setGroupCheckable(0, true, true);
     }
+
 }

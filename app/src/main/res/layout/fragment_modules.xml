@@ -3,16 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SubscriptionFragment">
+    tools:context=".ModulesFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Subscription"
+        android:text="Modulos"
         android:textSize="36sp"
         android:gravity="center"
-        android:textColor="@color/BlueNormal"/>
-
+        android:textColor="@color/BlueLight"/>
 
 </FrameLayout>
