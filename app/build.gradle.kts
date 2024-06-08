@@ -49,4 +49,6 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.13.2")
     //Uso biometrico
     implementation("androidx.biometric:biometric:1.1.0")
+    //lottie
+    implementation("com.airbnb.android:lottie:6.0.1")
 }

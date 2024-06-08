@@ -3,15 +3,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
+    android:orientation="vertical"
     tools:context=".HomeFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!-- Lottie Animation View -->
+
+    <!-- LinearLayout for text at the top -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Home"
-        android:textSize="36sp"
+        android:orientation="vertical"
         android:gravity="center"
-        android:textColor="@color/BlueLight"/>
+        android:padding="16dp">
+
+        <!-- TextView for header text -->
+        <TextView
+            android:id="@+id/headerText"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/welcome"
+            android:textColor="@color/BlueNormal"
+            android:textSize="30sp" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieAnimationView"
+            android:layout_width="380dp"
+            android:layout_height="400dp"
+            app:lottie_imageAssetsFolder="assets"
+            app:lottie_fileName="animation.json"
+            app:lottie_loop="true"
+            app:lottie_autoPlay="true"
+            android:layout_gravity="center" />
+    </LinearLayout>
 
 </FrameLayout>

@@ -24,6 +24,7 @@
         android:textColor="@color/white"
         android:textStyle="bold"
         android:layout_gravity="center"/>
+
     <TextView
         android:id="@+id/nav_textcorreo"
         android:layout_width="wrap_content"
