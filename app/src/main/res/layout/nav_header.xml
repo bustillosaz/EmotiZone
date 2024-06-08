@@ -10,7 +10,7 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/user_profile_pics"
+        android:id="@+id/nav_image"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_gravity="center"
@@ -25,7 +25,7 @@
         android:textStyle="bold"
         android:layout_gravity="center"/>
     <TextView
-        android:id="@+id/text"
+        android:id="@+id/nav_textcorreo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="zadibustillosalbornoz@gmail.com"
