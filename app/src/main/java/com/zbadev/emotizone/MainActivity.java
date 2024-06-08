@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     FloatingActionButton fab;
     View header;
     ImageView navImage;
-    TextView navCorreo;
+    TextView navNombre, navCorreo;
 
     // Declaración de variables
     private Button logoutButton; // Botón para cerrar sesión
@@ -165,6 +165,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //uno
         header = navigationView.getHeaderView(0);
         navImage = (ImageView) header.findViewById(R.id.nav_image);
+        navNombre = (TextView) header.findViewById(R.id.nav_textnombre);
         navCorreo = (TextView) header.findViewById(R.id.nav_textcorreo);
         //uno
 
@@ -291,10 +292,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void ParaInicializar(){
-        // Inicialización de variables y componentes de la interfaz de loco
-        //logoutButton = findViewById(R.id.btn_logout);
-        //userEmail = findViewById(R.id.user_email);
-        //userProfilePic = findViewById(R.id.user_profile_pics);
+        // Inicialización de variables y componentes de la interfaz
         auth = FirebaseAuth.getInstance();
         sharedPreferences = getSharedPreferences("EmotiizonePrefs", MODE_PRIVATE);
 
@@ -360,7 +358,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (user != null) {
             // Obtener el correo electrónico del usuario
             String email = user.getEmail();
+            String name = user.getDisplayName(); // Obtener el nombre del usuario
             navCorreo.setText(email);
+            navNombre.setText(name); // Mostrar el nombre del usuario
 
             // Obtener la foto de perfil del usuario
             Uri photoUrl = user.getPhotoUrl();
