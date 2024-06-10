@@ -2,11 +2,15 @@ package com.zbadev.emotizone;
 
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import android.widget.Toast;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +18,8 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class ModulesFragment extends Fragment {
+
+    CardView clothingCard;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -59,6 +65,17 @@ public class ModulesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_modules, container, false);
+        //return inflater.inflate(R.layout.fragment_modules, container, false);
+        // Initialize CardVie
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_modules, container, false);
+        clothingCard = view.findViewById(R.id.diagnosticCard);
+        clothingCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "Clothing Card Clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
+        return view;
     }
 }
