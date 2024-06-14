@@ -4,6 +4,5 @@
     <string name="navigation_drawer_close">Close Navigation Drawer</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <!--<string name="default_web_client_id">125193258454-q19fehat907efbd5d2a1p5t1hd2enm6k.apps.googleusercontent.com</string>-->
     <string name="welcome">Hola!, Bienvenido a Emotiizone.</string>
 </resources>
