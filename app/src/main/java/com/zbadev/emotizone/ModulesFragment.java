@@ -1,5 +1,6 @@
 package com.zbadev.emotizone;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
@@ -73,7 +74,10 @@ public class ModulesFragment extends Fragment {
         clothingCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "Clothing Card Clicked", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "Clothing Card Clicked", Toast.LENGTH_SHORT).show();
+                // Crear una intención para DiagnosticActivity
+                Intent intent = new Intent(getActivity(), DiagnosticActivity.class);
+                startActivity(intent); // Inicia la actividad de diagnóstico
             }
         });
         return view;
