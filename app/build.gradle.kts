@@ -56,4 +56,11 @@ dependencies {
     implementation("androidx.biometric:biometric:1.1.0")
     //lottie
     implementation("com.airbnb.android:lottie:6.0.1")
+    //Chat Bot
+    // Añade la dependencia del SDK del cliente de IA de Google para Android
+    implementation("com.google.ai.client.generativeai:generativeai:0.7.0")
+    // Necesario para operaciones one-shot (para usar `ListenableFuture` de Guava Android)
+    implementation("com.google.guava:guava:31.0.1-android")
+    // Necesario para operaciones de streaming (para utilizar `Publisher` de Reactive Streams)
+    implementation("org.reactivestreams:reactive-streams:1.0.4")
 }

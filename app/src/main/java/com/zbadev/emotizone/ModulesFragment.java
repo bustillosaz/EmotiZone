@@ -20,7 +20,7 @@ import android.widget.Toast;
  */
 public class ModulesFragment extends Fragment {
 
-    CardView clothingCard;
+    CardView clothingCard,clothingCard2;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -71,12 +71,22 @@ public class ModulesFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_modules, container, false);
         clothingCard = view.findViewById(R.id.diagnosticCard);
+        clothingCard2 = view.findViewById(R.id.chatbotCard);
         clothingCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Toast.makeText(getActivity(), "Clothing Card Clicked", Toast.LENGTH_SHORT).show();
                 // Crear una intención para DiagnosticActivity
                 Intent intent = new Intent(getActivity(), DiagnosticActivity.class);
+                startActivity(intent); // Inicia la actividad de diagnóstico
+            }
+        });
+        clothingCard2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(getActivity(), "Clothing Card Clicked", Toast.LENGTH_SHORT).show();
+                // Crear una intención para DiagnosticActivity
+                Intent intent = new Intent(getActivity(), ChatBotActivity.class);
                 startActivity(intent); // Inicia la actividad de diagnóstico
             }
         });
