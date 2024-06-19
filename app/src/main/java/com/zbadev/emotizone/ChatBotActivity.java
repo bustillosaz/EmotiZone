@@ -21,6 +21,8 @@ import com.google.ai.client.generativeai.java.GenerativeModelFutures;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 
+import android.graphics.PorterDuff;
+
 
 public class ChatBotActivity extends AppCompatActivity {
 
@@ -49,6 +51,9 @@ public class ChatBotActivity extends AppCompatActivity {
             dialog.setCancelable(false);
         }
 
+        dialog.setCancelable(true);  // Permite cerrar el diálogo presionando fuera de él y con el botón atrás
+        dialog.setCanceledOnTouchOutside(true);  // Permite cerrar el diálogo presionando fuera de él
+
         sendQuery = dialog.findViewById(R.id.sendMesage);
         queryEditText = dialog.findViewById(R.id.queryEditText);
 
@@ -76,17 +81,21 @@ public class ChatBotActivity extends AppCompatActivity {
 
                 queryEditText.setText("");
 
+                // Cambiar el color del drawable
+                Drawable logoIcon = getResources().getDrawable(R.drawable.emotizone_logo);
+                logoIcon.setColorFilter(Color.parseColor("#0367fb"), PorterDuff.Mode.SRC_IN);
+
                 chatBody("You", query, getDrawable(R.drawable.man_user_circle_icon));
                 GeminiResp.getResponse(chatModel, query, new ResponseCallback() {
                     @Override
                     public void onResponse(String response) {
                         progressBar.setVisibility(View.GONE);
-                        chatBody("AI", response, getDrawable(R.drawable.emotizone_logo));
+                        chatBody("AI", response, logoIcon);
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
-                        chatBody("AI", "Please try again.", getDrawable(R.drawable.emotizone_logo));
+                        chatBody("AI", "Please try again.", logoIcon);
                         progressBar.setVisibility(View.GONE);
                     }
                 });

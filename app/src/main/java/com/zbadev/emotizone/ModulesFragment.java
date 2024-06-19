@@ -3,6 +3,7 @@ package com.zbadev.emotizone;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
@@ -20,7 +21,7 @@ import android.widget.Toast;
  */
 public class ModulesFragment extends Fragment {
 
-    CardView clothingCard,clothingCard2;
+    CardView clothingCard,clothingCard2, preventionCard;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -72,6 +73,8 @@ public class ModulesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_modules, container, false);
         clothingCard = view.findViewById(R.id.diagnosticCard);
         clothingCard2 = view.findViewById(R.id.chatbotCard);
+        preventionCard = view.findViewById(R.id.preventionCard);
+
         clothingCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,6 +90,15 @@ public class ModulesFragment extends Fragment {
                 //Toast.makeText(getActivity(), "Clothing Card Clicked", Toast.LENGTH_SHORT).show();
                 // Crear una intención para DiagnosticActivity
                 Intent intent = new Intent(getActivity(), ChatBotActivity.class);
+                startActivity(intent); // Inicia la actividad de diagnóstico
+            }
+        });
+        preventionCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(getActivity(), "Clothing Card Clicked", Toast.LENGTH_SHORT).show();
+                // Crear una intención para DiagnosticActivity
+                Intent intent = new Intent(getActivity(), PreventionActivity.class);
                 startActivity(intent); // Inicia la actividad de diagnóstico
             }
         });

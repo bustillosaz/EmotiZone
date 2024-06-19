@@ -5,4 +5,28 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="welcome">Hola!, Bienvenido a Emotiizone.</string>
+
+    <string name="detail_planifica">
+        <b>1) Planificación y Organización:</b> Usa un calendario o una aplicación de planificación para organizar tareas, exámenes y actividades. Dividir grandes tareas en pasos más pequeños puede hacerlas más manejables.\n
+        <b>2) Método Pomodoro:</b> Estudia en intervalos de 25 minutos con breves descansos entre cada intervalo para mantener la concentración y prevenir el agotamiento.
+    </string>
+    <string name="detail_excercise">
+        <b>1) Actividad Física Diaria:</b> Dedica al menos 30 minutos al día a una actividad física que disfrutes, como caminar, correr, nadar o practicar deportes. El ejercicio regular ayuda a liberar endorfinas, que son sustancias químicas del cerebro que actúan como analgésicos naturales y elevan el estado de ánimo.
+    </string>
+    <string name="detail_relax">
+        <b>1) Meditación y Respiración Profunda:</b> Practica meditación o ejercicios de respiración profunda diariamente para reducir la ansiedad y mejorar la concentración. Aplicaciones como Headspace o Calm pueden ser útiles.\n
+        <b>2) Yoga:</b> Participa en clases de yoga o sigue rutinas en línea para combinar el ejercicio físico con técnicas de respiración y relajación.
+    </string>
+    <string name="detail_eat">
+        <b>1) Dieta Balanceada:</b> Mantén una dieta equilibrada rica en frutas, verduras, proteínas y granos enteros. Evita el exceso de cafeína y azúcar, que pueden aumentar los niveles de ansiedad.\n
+        <b>2) Hidratación:</b> Bebe suficiente agua durante el día. La deshidratación puede afectar la concentración y el estado de ánimo.
+    </string>
+    <string name="detail_bed">
+        <b>1) Rutina de Sueño Consistente:</b> Mantén un horario de sueño regular, y trata de dormir al menos 7-9 horas por noche. Evita el uso de dispositivos electrónicos antes de dormir para mejorar la calidad del sueño.\n
+        <b>2) Ambiente de Sueño Óptimo:</b> Asegúrate de que tu entorno para dormir sea cómodo, oscuro y silencioso.
+    </string>
+    <string name="detail_social">
+        <b>1) Mantén Contacto Social:</b> Participa en actividades extracurriculares y grupos estudiantiles para construir una red de apoyo social. Hablar con amigos y familiares puede proporcionar una salida emocional y reducir el estrés.\n
+        <b>2) Técnicas de Comunicación:</b> Aprende a expresar tus pensamientos y sentimientos de manera efectiva y a pedir ayuda cuando lo necesites.
+    </string>
 </resources>

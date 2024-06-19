@@ -16,6 +16,12 @@
         android:theme="@style/Theme.EmotiZone"
         tools:targetApi="31">
         <activity
+            android:name=".DetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PreventionActivity"
+            android:exported="false" />
+        <activity
             android:name=".ChatBotActivity"
             android:exported="false" />
         <activity
