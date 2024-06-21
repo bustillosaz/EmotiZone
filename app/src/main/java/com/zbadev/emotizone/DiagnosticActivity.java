@@ -1,9 +1,12 @@
 package com.zbadev.emotizone;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,8 +26,16 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.zbadev.emotizone.ml.ModelFinal;
+import com.zbadev.emotizone.ml.ModelUnquant;
 
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
@@ -33,6 +44,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class DiagnosticActivity extends AppCompatActivity {
 
@@ -109,7 +124,8 @@ public class DiagnosticActivity extends AppCompatActivity {
     // Método para clasificar la imagen utilizando un modelo de TensorFlow Lite
     public void classifyImage(Bitmap image) {
         try {
-            ModelFinal model = ModelFinal.newInstance(getApplicationContext());
+            //ModelFinal model = ModelFinal.newInstance(getApplicationContext());
+            ModelUnquant model = ModelUnquant.newInstance(getApplicationContext());
 
             // Redimensionar la imagen al tamaño requerido por el modelo
             Bitmap resizedImage = Bitmap.createScaledBitmap(image, imageSize, imageSize, false);
@@ -134,7 +150,7 @@ public class DiagnosticActivity extends AppCompatActivity {
             inputFeature0.loadBuffer(byteBuffer);
 
             // Ejecutar la inferencia del modelo y obtener el resultado
-            ModelFinal.Outputs outputs = model.process(inputFeature0);
+            ModelUnquant.Outputs outputs = model.process(inputFeature0);
             TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
 
             float[] confidences = outputFeature0.getFloatArray();
@@ -148,14 +164,69 @@ public class DiagnosticActivity extends AppCompatActivity {
             }
 
             // Definir las clases de emociones
-            String[] classes = {"Estres Alto", "Estres Moderado", "Estres Bajo", "Relajado", "Feliz", "Ansiedad", "Triste", "Otro"};
+            /*String[] classes = {"Estres Alto", "Estres Moderado", "Estres Bajo", "Relajado", "Feliz", "Ansiedad", "Triste", "Otro"};*/
+            String[] classes = {"Estres Alto", "Estres Moderado", "Estres Bajo", "Relajacion", "Felicidad", "Ansiedad", "Tristeza", "Otros"};
+            String detectedEmotion = classes[maxPos];
             result.setText(classes[maxPos]);
 
+            // Mostrar mensaje de alerta si la clase es:
             StringBuilder s = new StringBuilder();
             for (int i = 0; i < classes.length; i++) {
                 s.append(String.format("%s: %.1f%%\n", classes[i], confidences[i] * 100));
             }
             confidence.setText(s.toString());
+
+            // Mostrar mensaje de alerta según la clase
+            String message = "";
+            String title = "";
+            boolean showDetailsButton = true;
+
+            switch (classes[maxPos]) {
+                case "Estres Alto":
+                    title = "HOY ESTAS CON ESTRES ALTO";
+                    message = getString(R.string.estres_alto);
+                    showDetailsButton = false;
+                    break;
+                case "Estres Moderado":
+                    title = "HOY ESTAS CON ESTRES MODERADO";
+                    message = getString(R.string.estres_moderado);
+                    showDetailsButton = false;
+                    break;
+                case "Estres Bajo":
+                    title = "HOY ESTAS CON ESTRES BAJO";
+                    message = getString(R.string.estres_bajo);
+                    showDetailsButton = false;
+                    break;
+                case "Relajacion":
+                    title = "HOY ESTAS RELAJADO";
+                    message = getString(R.string.relajado);
+                    showDetailsButton = false;
+                    break;
+                case "Felicidad":
+                    title = "HOY ESTAS FELIZ";
+                    message = getString(R.string.feliz);
+                    showDetailsButton = false;
+                    break;
+                case "Ansiedad":
+                    title = "HOY ESTAS ANSIOSO";
+                    message = getString(R.string.ansioso);
+                    showDetailsButton = false;
+                    break;
+                case "Tristeza":
+                    title = "HOY ESTAS TRISTE";
+                    message = getString(R.string.tristeza);
+                    showDetailsButton = false;
+                    break;
+                case "Otros":
+                    title = "VUELVE A INTENTAR";
+                    message = getString(R.string.otros);
+                    showDetailsButton = true;
+                    break;
+            }
+            if (!message.isEmpty()) {
+                //showAlertDialog(message, title, showDetailsButton);
+                showAlertDialog(message, title, detectedEmotion, showDetailsButton);
+            }
 
             model.close();
         } catch (IOException e) {
@@ -194,5 +265,120 @@ public class DiagnosticActivity extends AppCompatActivity {
             }
         }
     }
+
+    // Método para mostrar un diálogo de alerta
+    private void showAlertDialog(String message, String title, String detectedEmotion, boolean showDetailsButton) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setCancelable(false);
+
+        if (showDetailsButton) {
+            builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(DiagnosticActivity.this, "hola", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }
+            });
+        }else {
+            builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Obtener el usuario actual
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    if (user != null) {
+                        String userName = user.getDisplayName();
+                        String userEmail = user.getEmail();
+                        // Guardar el estado emocional en Firestore
+                        saveEmotionalStateToFirestore(userName, userEmail, detectedEmotion);
+                    }
+                    dialog.dismiss();
+                }
+            });
+            builder.setNegativeButton("Detalles", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Aquí puedes definir la acción para el botón de detalles
+                }
+            });
+        }
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    // Clase modelo para el estado emocional
+    private static class EmotionalState {
+        private String userName;
+        private String userEmail;
+        private String emotionalState;
+        private String date;
+
+        public EmotionalState(String userName, String userEmail, String emotionalState, String date) {
+            this.userName = userName;
+            this.userEmail = userEmail;
+            this.emotionalState = emotionalState;
+            this.date = date;
+        }
+
+        // Getters y setters
+        public String getUserName() {
+            return userName;
+        }
+
+        public void setUserName(String userName) {
+            this.userName = userName;
+        }
+
+        public String getUserEmail() {
+            return userEmail;
+        }
+
+        public void setUserEmail(String userEmail) {
+            this.userEmail = userEmail;
+        }
+
+        public String getEmotionalState() {
+            return emotionalState;
+        }
+
+        public void setEmotionalState(String emotionalState) {
+            this.emotionalState = emotionalState;
+        }
+
+        public String getDate() {
+            return date;
+        }
+
+        public void setDate(String date) {
+            this.date = date;
+        }
+    }
+
+    // Método para guardar el estado emocional en Firestore
+    private void saveEmotionalStateToFirestore(String userName, String userEmail, String emotionalState) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
+
+        EmotionalState emotionalStateData = new EmotionalState(userName, userEmail, emotionalState, date);
+
+        db.collection("emotionalStates")
+                .add(emotionalStateData)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Toast.makeText(DiagnosticActivity.this, "Estado emocional guardado correctamente", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(DiagnosticActivity.this, "Error al guardar el estado emocional", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
 
 }

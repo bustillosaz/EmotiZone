@@ -44,6 +44,8 @@ dependencies {
     implementation("com.google.firebase:firebase-auth:23.0.0")
     implementation("org.tensorflow:tensorflow-lite-support:0.1.0")
     implementation("org.tensorflow:tensorflow-lite-metadata:0.1.0")
+    // Google Firestore Bd
+    implementation("com.google.firebase:firebase-firestore:25.0.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

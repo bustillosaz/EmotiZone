@@ -65,6 +65,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.concurrent.Executor;
 
 // La actividad principal que implementa la interfaz NavigationView.OnNavigationItemSelectedListener
@@ -81,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     TextView navNombre, navCorreo;
 
     // Declaración de variables
+    private FirebaseFirestore db;
     private Button logoutButton; // Botón para cerrar sesión
     private FirebaseAuth auth; // Instancia de FirebaseAuth para gestionar la autenticación
     private GoogleSignInClient mGoogleSignInClient; // Cliente de inicio de sesión con Google
@@ -101,6 +105,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Inicialización de Firebase
+        FirebaseApp.initializeApp(this);
+        db = FirebaseFirestore.getInstance();
 
         // Inicializar el botón flotante (FloatingActionButton)
         fab = findViewById(R.id.fab);

@@ -29,4 +29,28 @@
         <b>1) Mantén Contacto Social:</b> Participa en actividades extracurriculares y grupos estudiantiles para construir una red de apoyo social. Hablar con amigos y familiares puede proporcionar una salida emocional y reducir el estrés.\n
         <b>2) Técnicas de Comunicación:</b> Aprende a expresar tus pensamientos y sentimientos de manera efectiva y a pedir ayuda cuando lo necesites.
     </string>
+    <string name="estres_alto">
+        Entiendo que estás pasando por un momento muy difícil. Es importante que te tomes un tiempo para ti, respira profundamente y recuerda que no estás solo. Considera hablar con alguien de confianza o buscar apoyo profesional para manejar esta carga.
+    </string>
+    <string name="estres_moderado">
+        Estás enfrentando varios desafíos, pero estás manejándolos con fuerza. Asegúrate de tomarte pequeños descansos para desconectar y recargar energías. Practicar alguna actividad relajante puede ayudarte a mantener el equilibrio
+    </string>
+    <string name="estres_bajo">
+        Es genial ver que estás manejando bien las demandas del día a día. Sigue prestando atención a tus necesidades y no olvides incorporar actividades que disfrutes para mantener tu bienestar.
+    </string>
+    <string name="relajado">
+        Qué maravilloso que te sientas tan tranquilo. Aprovecha este estado de calma para disfrutar de las cosas que amas y mantener hábitos saludables. Tu serenidad es un gran ejemplo para los demás.
+    </string>
+    <string name="feliz">
+        Es fantástico verte tan contento! Celebra tus logros y momentos de alegría. Comparte tu felicidad con los que te rodean, ya que tu positividad puede ser contagiosa y beneficiar a todos.
+    </string>
+    <string name="ansioso">
+        Sé que la ansiedad puede ser abrumadora, pero recuerda que es temporal y manejable. Intenta técnicas de respiración profunda y mindfulness.
+    </string>
+    <string name="tristeza">
+        Siento mucho que estés pasando por un momento difícil. Permítete sentir todas tus emociones y recuerda que está bien no estar bien a veces.
+    </string>
+    <string name="otros">
+        La foto o imagen no es una persona. Intenta tomar otra foto.
+    </string>
 </resources>
