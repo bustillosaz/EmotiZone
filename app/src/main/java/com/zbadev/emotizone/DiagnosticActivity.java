@@ -270,11 +270,27 @@ public class DiagnosticActivity extends AppCompatActivity {
     private void showAlertDialog(String message, String title, String detectedEmotion, boolean showDetailsButton) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(title);
-        builder.setMessage(message);
+
+        // Infla el diseño personalizado
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_custom, null);
+        builder.setView(dialogView);
+
+        //titulo
+        TextView titles = dialogView.findViewById(R.id.title);
+        titles.setText(title);
+
+        // Configura el mensaje del diálogo
+        TextView dialogMessage = dialogView.findViewById(R.id.dialog_message);
+        dialogMessage.setText(message);
+
+        // Obtén la casilla de verificación
+        CheckBox checkboxHelp = dialogView.findViewById(R.id.checkbox_help);
+
         builder.setCancelable(false);
 
         if (showDetailsButton) {
+            // Si showDetailsButton es verdadero, la casilla de verificación permanece oculta
             builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -282,19 +298,29 @@ public class DiagnosticActivity extends AppCompatActivity {
                     dialog.dismiss();
                 }
             });
-        }else {
+        } else {
+            // Muestra la casilla de verificación
+            checkboxHelp.setVisibility(View.VISIBLE);
+
             builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+
                     // Obtener el usuario actual
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     if (user != null) {
                         String userName = user.getDisplayName();
                         String userEmail = user.getEmail();
+
                         // Guardar el estado emocional en Firestore
                         saveEmotionalStateToFirestore(userName, userEmail, detectedEmotion);
                     }
                     dialog.dismiss();
+
+                    if (checkboxHelp.isChecked()) {
+                        // Llama a la función si la casilla está marcada
+                        showHelpFunction();
+                    }
                 }
             });
             builder.setNegativeButton("Detalles", new DialogInterface.OnClickListener() {
@@ -307,6 +333,11 @@ public class DiagnosticActivity extends AppCompatActivity {
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    private void showHelpFunction() {
+        // Implementa la función que debe ser llamada si la casilla está marcada
+        Toast.makeText(DiagnosticActivity.this, "Ayuda solicitada", Toast.LENGTH_SHORT).show();
     }
 
     // Clase modelo para el estado emocional
