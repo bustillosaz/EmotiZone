@@ -337,7 +337,12 @@ public class DiagnosticActivity extends AppCompatActivity {
 
     private void showHelpFunction() {
         // Implementa la función que debe ser llamada si la casilla está marcada
-        Toast.makeText(DiagnosticActivity.this, "Ayuda solicitada", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(DiagnosticActivity.this, "Ayuda solicitada", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(DiagnosticActivity.this, ChatBotActivity.class);
+        // Iniciar la actividad de login
+        startActivity(intent);
+        // Finalizar la actividad actual
+        finish();
     }
 
     // Clase modelo para el estado emocional
@@ -378,7 +383,6 @@ public class DiagnosticActivity extends AppCompatActivity {
         public void setEmotionalState(String emotionalState) {
             this.emotionalState = emotionalState;
         }
-
         public String getDate() {
             return date;
         }
@@ -410,6 +414,5 @@ public class DiagnosticActivity extends AppCompatActivity {
                     }
                 });
     }
-
 
 }
