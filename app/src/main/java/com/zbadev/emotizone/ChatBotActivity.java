@@ -26,8 +26,15 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class ChatBotActivity extends AppCompatActivity {
 
@@ -141,25 +148,50 @@ public class ChatBotActivity extends AppCompatActivity {
     private void fetchEmotionalStateAndSendMessage(String userEmail) {
         db.collection("emotionalStates")
                 .whereEqualTo("userEmail", userEmail)
+                .orderBy("date", Query.Direction.DESCENDING)
+                .limit(1)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
+                        QuerySnapshot result = task.getResult();
+                        if (result != null && !result.isEmpty()) {
+                            DocumentSnapshot document = result.getDocuments().get(0);
                             detectedEmotion = document.getString("emotionalState");
-                            break; // Solo queremos el primer resultado
-                        }
-                        if (detectedEmotion != null && !detectedEmotion.isEmpty()) {
-                            // Enviar mensaje inicial con el contexto emocional
-                            sendAutomaticMessage("Hoy estoy con un estado de " + detectedEmotion);
-                        } else {
-                            // El usuario debe iniciar el chat sin contexto emocional
-                            // Opcionalmente, mostrar un mensaje para iniciar el chat
+                            String dateString = document.getString("date");
+                            if (dateString != null && !dateString.isEmpty()) {
+                                try {
+                                    Date date = parseDate(dateString);
+                                    if (isToday(date)) {
+                                        sendAutomaticMessage("Hoy estoy con un estado de " + detectedEmotion);
+                                    } else {
+                                        // El usuario debe iniciar el chat sin contexto emocional
+                                        // Opcionalmente, mostrar un mensaje para iniciar el chat
+                                    }
+                                } catch (ParseException e) {
+                                    Log.e("ChatBotActivity", "Error al parsear la fecha: ", e);
+                                }
+                            }
                         }
                     } else {
                         // Manejar errores
                         Log.e("ChatBotActivity", "Error al obtener el estado emocional: ", task.getException());
                     }
                 });
+    }
+
+
+    // Método para convertir la cadena de fecha a un objeto Date
+    private Date parseDate(String dateString) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        return sdf.parse(dateString);
+    }
+
+    // Método para verificar si la fecha dada es hoy
+    private boolean isToday(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
+        String dateStr = sdf.format(date);
+        String todayStr = sdf.format(new Date());
+        return dateStr.equals(todayStr);
     }
 
     // Método para enviar un mensaje automático basado en el contexto emocional
@@ -214,7 +246,7 @@ public class ChatBotActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable throwable) {
-                chatBody("EmotiiZoneIA", "Por favor, inténtalo de nuevo. Error: " + throwable.getMessage(), logoIcon);
+                chatBody("EmotiiZoneIA", "Por favor intenta nuevamente. Error: " + throwable.getMessage(), logoIcon);
                 progressBar.setVisibility(View.GONE);
             }
         });
