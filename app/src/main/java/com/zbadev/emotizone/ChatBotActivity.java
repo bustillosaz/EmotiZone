@@ -31,7 +31,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 public class ChatBotActivity extends AppCompatActivity {
 
-    // UI and logic variables declaration
+    // Declaración de variables de la interfaz de usuario y lógica
     private TextInputEditText queryEditText;
     private ImageView sendQuery, appIcon;
     private FloatingActionButton btnShowDialog;
@@ -48,37 +48,37 @@ public class ChatBotActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatbot);
 
-        // Initialize FirebaseAuth and FirebaseFirestore
+        // Inicializar FirebaseAuth y FirebaseFirestore
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        // Create and initialize the dialog
+        // Crear e inicializar el diálogo
         dialog = new Dialog(this);
         dialog.setContentView(R.layout.message_dialog);
 
-        // Configure dialog background as transparent
+        // Configurar el fondo del diálogo como transparente
         if (dialog.getWindow() != null) {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         }
 
-        // Allow dialog to be closed when touching outside or pressing back button
+        // Permitir que el diálogo se cierre al tocar fuera o presionar el botón de retroceso
         dialog.setCancelable(true);
         dialog.setCanceledOnTouchOutside(true);
 
-        // Initialize dialog UI components
+        // Inicializar componentes de la interfaz de usuario del diálogo
         sendQuery = dialog.findViewById(R.id.sendMesage);
         queryEditText = dialog.findViewById(R.id.queryEditText);
 
-        // Initialize activity components
+        // Inicializar componentes de la actividad
         btnShowDialog = findViewById(R.id.showMessageDIalog);
         progressBar = findViewById(R.id.progressBar);
         chatResponse = findViewById(R.id.chatResponse);
         appIcon = findViewById(R.id.appIcon);
 
-        // Get the chat model
+        // Obtener el modelo de chat
         chatModel = getChatModel();
 
-        // Configure button to show dialog
+        // Configurar el botón para mostrar el diálogo
         btnShowDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,7 +86,7 @@ public class ChatBotActivity extends AppCompatActivity {
             }
         });
 
-        // Configure send message button
+        // Configurar el botón de enviar mensaje
         sendQuery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,46 +98,46 @@ public class ChatBotActivity extends AppCompatActivity {
             }
         });
 
-        // Get emotional state of current user and send automatic message
+        // Obtener el estado emocional del usuario actual y enviar un mensaje automático
         FirebaseUser currentUser = auth.getCurrentUser();
         if (currentUser != null) {
             String userEmail = currentUser.getEmail();
             fetchEmotionalStateAndSendMessage(userEmail);
         } else {
-            // Handle case where user is not logged in
-            // You may want to redirect to login screen or handle accordingly
+            // Manejar el caso donde el usuario no ha iniciado sesión
+            // Puede redirigir a la pantalla de inicio de sesión o manejarlo de acuerdo a sus necesidades
         }
     }
 
-    // Method to get the chat model
+    // Método para obtener el modelo de chat
     private ChatFutures getChatModel() {
         GeminiResp model = new GeminiResp();
         GenerativeModelFutures modelFutures = model.getModel(this);
         return modelFutures.startChat();
     }
 
-    // Method to add a message to the chat
+    // Método para agregar un mensaje al chat
     private void chatBody(String userName, String query, Drawable image) {
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.chat_message, null);
 
-        // Initialize message components
+        // Inicializar componentes del mensaje
         TextView name = view.findViewById(R.id.name);
         TextView message = view.findViewById(R.id.agentMessage);
         ImageView logo = view.findViewById(R.id.logo);
 
-        // Set component values
+        // Establecer valores de los componentes
         name.setText(userName);
         message.setText(query);
         logo.setImageDrawable(image);
 
-        // Add message to response container
+        // Agregar mensaje al contenedor de respuestas
         chatResponse.addView(view);
         ScrollView scrollView = findViewById(R.id.scrollView);
         scrollView.post(() -> scrollView.fullScroll(View.FOCUS_DOWN));
     }
 
-    // Method to fetch emotional state from Firestore and send automatic message
+    // Método para obtener el estado emocional desde Firestore y enviar un mensaje automático
     private void fetchEmotionalStateAndSendMessage(String userEmail) {
         db.collection("emotionalStates")
                 .whereEqualTo("userEmail", userEmail)
@@ -146,38 +146,38 @@ public class ChatBotActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             detectedEmotion = document.getString("emotionalState");
-                            break; // Only want the first result
+                            break; // Solo queremos el primer resultado
                         }
                         if (detectedEmotion != null && !detectedEmotion.isEmpty()) {
-                            // Send initial message with emotional context
+                            // Enviar mensaje inicial con el contexto emocional
                             sendAutomaticMessage("Hoy estoy con un estado de " + detectedEmotion);
                         } else {
-                            // User must start the chat with no emotional context
-                            // Optionally show a prompt to start the chat
+                            // El usuario debe iniciar el chat sin contexto emocional
+                            // Opcionalmente, mostrar un mensaje para iniciar el chat
                         }
                     } else {
-                        // Handle errors
-                        Log.e("ChatBotActivity", "Error fetching emotional state: ", task.getException());
+                        // Manejar errores
+                        Log.e("ChatBotActivity", "Error al obtener el estado emocional: ", task.getException());
                     }
                 });
     }
 
-    // Method to send automatic message based on emotional context
+    // Método para enviar un mensaje automático basado en el contexto emocional
     private void sendAutomaticMessage(String query) {
         dialog.dismiss();
         progressBar.setVisibility(View.VISIBLE);
         appIcon.setVisibility(View.GONE);
 
-        // Change logo icon color
+        // Cambiar color del icono del logo
         Drawable logoIcon = getResources().getDrawable(R.drawable.emotizone_logo);
         logoIcon.setColorFilter(Color.parseColor("#0367fb"), PorterDuff.Mode.SRC_IN);
 
-        // Get current user from Firebase
+        // Obtener el usuario actual desde Firebase
         FirebaseUser currentUser = auth.getCurrentUser();
         if (currentUser != null) {
             Uri photoUrl = currentUser.getPhotoUrl();
             if (photoUrl != null) {
-                // Load user profile photo using Glide
+                // Cargar foto de perfil del usuario usando Glide
                 Glide.with(ChatBotActivity.this).load(photoUrl).into(appIcon);
                 Glide.with(ChatBotActivity.this)
                         .load(photoUrl)
@@ -190,11 +190,11 @@ public class ChatBotActivity extends AppCompatActivity {
 
                             @Override
                             public void onLoadCleared(Drawable placeholder) {
-                                // Optional: handle placeholder
+                                // Opcional: manejar el marcador de posición
                             }
                         });
             } else {
-                // Show default image if user does not have a profile photo
+                // Mostrar imagen predeterminada si el usuario no tiene foto de perfil
                 appIcon.setImageResource(R.drawable.man_user_circle_icon);
                 chatBody("Tu", query, getResources().getDrawable(R.drawable.man_user_circle_icon));
                 requestChatResponse(query, logoIcon);
@@ -202,9 +202,9 @@ public class ChatBotActivity extends AppCompatActivity {
         }
     }
 
-    // Method to request chat response from the chat model
+    // Método para solicitar una respuesta de chat al modelo de chat
     private void requestChatResponse(String query, Drawable logoIcon) {
-        // Get response from chat model
+        // Obtener respuesta del modelo de chat
         GeminiResp.getResponse(chatModel, query, new ResponseCallback() {
             @Override
             public void onResponse(String response) {
@@ -214,7 +214,7 @@ public class ChatBotActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable throwable) {
-                chatBody("EmotiiZoneIA", "Please try again. Error: " + throwable.getMessage(), logoIcon);
+                chatBody("EmotiiZoneIA", "Por favor, inténtalo de nuevo. Error: " + throwable.getMessage(), logoIcon);
                 progressBar.setVisibility(View.GONE);
             }
         });
