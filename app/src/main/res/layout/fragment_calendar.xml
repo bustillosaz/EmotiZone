@@ -1,17 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginTop="35dp"
     tools:context=".CalendarFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <!-- Calendar View -->
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:firstDayOfWeek="1"
+        android:dateTextAppearance="@style/CalendarDateText"
+        android:weekDayTextAppearance="@style/CalendarWeekDayText" />
+
+    <!-- Today's Schedule Header -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Calendario"
-        android:textSize="36sp"
-        android:gravity="center"
-        android:textColor="@color/BlueLight"/>
+        android:layout_height="wrap_content"
+        android:text="Como estuvo tu día:"
+        android:textSize="20sp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:textColor="@color/black"
+        android:textAlignment="center"/>
 
-</FrameLayout>
+    <!-- RecyclerView for today's schedule -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_margin="16dp"
+        android:scrollbars="vertical"/>
+
+</LinearLayout>

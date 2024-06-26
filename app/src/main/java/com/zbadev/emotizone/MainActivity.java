@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private SharedPreferences sharedPreferences; // Preferencias compartidas para almacenar datos persistentes
     private Handler inactivityHandler; // Manejador para gestionar la inactividad del usuario
     private Runnable inactivityRunnable; // Runnable que se ejecuta tras un período de inactividad
-    private static final long INACTIVITY_TIMEOUT = 5 * 60 * 1000; // Tiempo de inactividad en milisegundos (5 minutos)
+    private static final long INACTIVITY_TIMEOUT = 2 * 60 * 1000; // Tiempo de inactividad en milisegundos (5 minutos)
     private boolean isAppInBackground = false; // Bandera para verificar si la app está en segundo plano
 
     @Override
@@ -480,7 +480,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             sharedPreferences.edit().putBoolean("loggedIn", true).apply();
         }
         // Marcar que la aplicación está en segundo plano
-        isAppInBackground = true;
+        isAppInBackground = false;
         // Detener el temporizador de inactividad
         stopInactivityTimer();
     }
