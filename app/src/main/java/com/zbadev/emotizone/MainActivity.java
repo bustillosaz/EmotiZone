@@ -200,7 +200,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Toast.makeText(this, "Chatbot", Toast.LENGTH_SHORT).show();
             clearBottomNavigationSelection();
         } else if (itemId == R.id.nav_stadistics) {
-            Toast.makeText(this, "Estadísticas", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Estadísticas", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this, GraphsActivity.class);
+            startActivity(intent);
             clearBottomNavigationSelection();
         } else if (itemId == R.id.nav_logout) {
             Toast.makeText(this, "Cerrar sesión", Toast.LENGTH_SHORT).show();

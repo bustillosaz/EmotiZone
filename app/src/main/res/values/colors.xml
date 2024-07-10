@@ -12,4 +12,18 @@
     <color name="teal_700">#FF018786</color>
     <color name="lavender">#8692f7</color>
     <color name="blue_light">#ADD8E6</color>
+    <color name="colorEstresAlto">#FF0000</color> <!-- Rojo -->
+    <color name="colorEstresModerado">#FFA500</color> <!-- Naranja -->
+    <color name="colorEstresBajo">#FFFF00</color> <!-- Amarillo -->
+    <color name="colorRelajacion">#008000</color> <!-- Verde -->
+    <color name="colorFelicidad">#0000FF</color> <!-- Azul -->
+    <color name="colorAnsiedad">#800080</color> <!-- Púrpura -->
+    <color name="colorTristeza">#00FFFF</color> <!-- Cian -->
+    <!--<color name="colorEstresAlto">#ff0000</color>
+    <color name="colorEstresModerado">#ffa500</color>
+    <color name="colorEstresBajo">#ffff00</color>
+    <color name="colorRelajacion">#00ff00</color>
+    <color name="colorFelicidad">#a1c8d1</color>
+    <color name="colorAnsiedad">#808080</color>
+    <color name="colorTristeza">#00008b</color>-->
 </resources>

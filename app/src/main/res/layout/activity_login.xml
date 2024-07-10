@@ -142,22 +142,22 @@
             </LinearLayout>
 
             <com.google.android.material.button.MaterialButton
-                style="@style/Widget.Material3.Button.OutlinedButton.Icon"
                 android:id="@+id/btn_login_google"
+                style="@style/Widget.Material3.Button.OutlinedButton.Icon"
                 android:layout_width="match_parent"
                 android:layout_height="58dp"
                 android:layout_marginTop="0dp"
                 android:text="Inicar con Google"
                 android:textColor="@color/BlueNormal"
-                android:textStyle="bold"
                 android:textSize="20dp"
+                android:textStyle="bold"
                 app:icon="@drawable/icons8_logo_de_google"
                 app:iconGravity="textStart"
                 app:iconPadding="6dp"
-                app:iconTint="@color/BlueNormal"
                 app:iconSize="22dp"
+                app:iconTint="@color/BlueNormal"
                 app:strokeColor="@color/BlueNormal"
-                app:strokeWidth="2dp"/>
+                app:strokeWidth="2dp" />
 
             <TextView
                 android:layout_width="wrap_content"

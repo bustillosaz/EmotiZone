@@ -65,4 +65,6 @@ dependencies {
     implementation("com.google.guava:guava:31.0.1-android")
     // Necesario para operaciones de streaming (para utilizar `Publisher` de Reactive Streams)
     implementation("org.reactivestreams:reactive-streams:1.0.4")
+    //Graficas MPAndroidChart
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 }

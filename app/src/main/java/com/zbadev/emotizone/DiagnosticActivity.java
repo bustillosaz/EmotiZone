@@ -294,7 +294,8 @@ public class DiagnosticActivity extends AppCompatActivity {
             builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(DiagnosticActivity.this, "hola", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(DiagnosticActivity.this, "hola", Toast.LENGTH_SHORT).show();
+                    showPictureDialog();
                     dialog.dismiss();
                 }
             });
@@ -404,7 +405,7 @@ public class DiagnosticActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        Toast.makeText(DiagnosticActivity.this, "Estado emocional guardado correctamente", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(DiagnosticActivity.this, "Estado emocional guardado correctamente", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
