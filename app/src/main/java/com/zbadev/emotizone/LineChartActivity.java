@@ -43,11 +43,6 @@ public class LineChartActivity extends AppCompatActivity {
         toolbarchart = findViewById(R.id.toollinechart);
         setSupportActionBar(toolbarchart);
 
-        // Cambiar el título del Toolbar
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Cambio de Estados Emocionales a lo largo del tiempo");
-        }
-
         // Inicializar Firestore
         db = FirebaseFirestore.getInstance();
 

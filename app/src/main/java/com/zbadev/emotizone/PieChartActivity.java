@@ -47,9 +47,9 @@ public class PieChartActivity extends AppCompatActivity {
         setSupportActionBar(toolbarchart);
 
         // Cambiar el título del Toolbar
-        if (getSupportActionBar() != null) {
+        /*if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Proporción de Estados Emocionales");
-        }
+        }*/
 
         // Inicializar Firestore
         db = FirebaseFirestore.getInstance();

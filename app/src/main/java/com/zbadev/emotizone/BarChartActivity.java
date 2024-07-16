@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
@@ -44,9 +45,9 @@ public class BarChartActivity extends AppCompatActivity {
         setSupportActionBar(toolbarchart);
 
         // Cambiar el título del Toolbar
-        if (getSupportActionBar() != null) {
+        /*if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Cantidad de Registros");
-        }
+        }*/
 
         // Inicializar Firestore
         db = FirebaseFirestore.getInstance();
@@ -139,6 +140,7 @@ public class BarChartActivity extends AppCompatActivity {
                     barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
                     barChart.getXAxis().setGranularity(1f);
                     barChart.getXAxis().setGranularityEnabled(true);
+                    barChart.animateY(1400, Easing.EaseInOutQuad);
 
                     barChart.invalidate(); // refrescar el gráfico
                 } else {

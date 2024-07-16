@@ -14,7 +14,7 @@ import org.checkerframework.common.subtyping.qual.Bottom;
 public class GraphsActivity extends AppCompatActivity {
 
     Toolbar toolbar;
-    Button barChart, pieChart, lineChart, scatterChart, stackedBarChart;
+    Button barChart, pieChart, lineChart, scatterChart, stackedBarChart, askedBarChart, horizontalBarChart;
 
 
     @Override
@@ -30,6 +30,8 @@ public class GraphsActivity extends AppCompatActivity {
         lineChart = findViewById(R.id.linechart);
         scatterChart = findViewById(R.id.scatterchart);
         stackedBarChart = findViewById(R.id.stackedbarchart);
+        askedBarChart = findViewById(R.id.askedchart);
+        horizontalBarChart = findViewById(R.id.horizontalchart);
 
         barChart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,7 +68,23 @@ public class GraphsActivity extends AppCompatActivity {
         scatterChart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(GraphsActivity.this, ScatterChartActivity.class); // Cambia "NuevaActividad" al nombre de tu nueva actividad
+                Intent intent = new Intent(GraphsActivity.this, CubicLinesChartActivity.class); // Cambia "NuevaActividad" al nombre de tu nueva actividad
+                startActivity(intent);
+            }
+        });
+
+        askedBarChart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(GraphsActivity.this, FrequentlyAskedActivity.class); // Cambia "NuevaActividad" al nombre de tu nueva actividad
+                startActivity(intent);
+            }
+        });
+
+        horizontalBarChart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(GraphsActivity.this, HorizontalBarChartActivity.class); // Cambia "NuevaActividad" al nombre de tu nueva actividad
                 startActivity(intent);
             }
         });

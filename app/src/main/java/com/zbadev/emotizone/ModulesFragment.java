@@ -1,6 +1,7 @@
 package com.zbadev.emotizone;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
@@ -11,6 +12,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -21,7 +32,9 @@ import android.widget.Toast;
  */
 public class ModulesFragment extends Fragment {
 
-    CardView clothingCard,clothingCard2, preventionCard;
+    CardView clothingCard,clothingCard2, preventionCard, statisticsCard;
+    private ImageView userImage;
+    private TextView userNombre, date;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -74,6 +87,10 @@ public class ModulesFragment extends Fragment {
         clothingCard = view.findViewById(R.id.diagnosticCard);
         clothingCard2 = view.findViewById(R.id.chatbotCard);
         preventionCard = view.findViewById(R.id.preventionCard);
+        statisticsCard = view.findViewById(R.id.statisticsCard);
+        userImage = view.findViewById(R.id.ImageUser);
+        userNombre = view.findViewById(R.id.UserLog);
+        date = view.findViewById(R.id.day);
 
         clothingCard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,6 +119,46 @@ public class ModulesFragment extends Fragment {
                 startActivity(intent); // Inicia la actividad de diagnóstico
             }
         });
+
+        statisticsCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(getActivity(), "Clothing Card Clicked", Toast.LENGTH_SHORT).show();
+                // Crear una intención para DiagnosticActivity
+                Intent intent = new Intent(getActivity(), GraphsActivity.class);
+                startActivity(intent); // Inicia la actividad de diagnóstico
+            }
+        });
+
+
+        // Actualizar la UI con los datos del usuario
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        updateUI(currentUser);
+
+        // Establecer la fecha actual
+        setCurrentDate();
+
         return view;
     }
+
+    private void updateUI(FirebaseUser user) {
+        if (user != null) {
+            // Obtener el nombre del usuario
+            String name = user.getDisplayName();
+            userNombre.setText(name != null ? name : "Usuario");
+
+            // Obtener la foto de perfil del usuario
+            Uri photoUrl = user.getPhotoUrl();
+            if (photoUrl != null) {
+                Glide.with(this).load(photoUrl).into(userImage);
+            } else {
+                userImage.setImageResource(R.drawable.man_user_circle_icon); // Imagen por defecto
+            }
+        }
+    }
+    private void setCurrentDate() {
+        String currentDate = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
+        date.setText(currentDate);
+    }
+
 }

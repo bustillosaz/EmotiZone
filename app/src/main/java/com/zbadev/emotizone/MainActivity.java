@@ -198,6 +198,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             bottomNavigationView.setSelectedItemId(R.id.bottom_me);
         } else if (itemId == R.id.nav_chatbot) {
             Toast.makeText(this, "Chatbot", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this, ChatBotActivity.class);
+            startActivity(intent);
             clearBottomNavigationSelection();
         } else if (itemId == R.id.nav_stadistics) {
             //Toast.makeText(this, "Estadísticas", Toast.LENGTH_SHORT).show();
@@ -258,7 +260,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                Toast.makeText(MainActivity.this, "Module 1 is clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, DiagnosticActivity.class);
+                startActivity(intent);
+                //Toast.makeText(MainActivity.this, "Module 1 is clicked", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -266,7 +270,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                Toast.makeText(MainActivity.this, "Module 2 is Clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, PreventionActivity.class);
+                startActivity(intent);
+                //Toast.makeText(MainActivity.this, "Module 2 is Clicked", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -274,7 +280,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                Toast.makeText(MainActivity.this, "Module 3 is Clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, GraphsActivity.class);
+                startActivity(intent);
+                //Toast.makeText(MainActivity.this, "Module 3 is Clicked", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -282,7 +290,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                Toast.makeText(MainActivity.this, "ChatBot is Clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, ChatBotActivity.class);
+                startActivity(intent);
+                //Toast.makeText(MainActivity.this, "ChatBot is Clicked", Toast.LENGTH_SHORT).show();
             }
         });
 

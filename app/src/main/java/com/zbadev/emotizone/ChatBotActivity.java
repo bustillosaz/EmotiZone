@@ -208,6 +208,7 @@ public class ChatBotActivity extends AppCompatActivity {
         FirebaseUser currentUser = auth.getCurrentUser();
         if (currentUser != null) {
             Uri photoUrl = currentUser.getPhotoUrl();
+            String userEmail = currentUser.getEmail();
             if (photoUrl != null) {
                 // Cargar foto de perfil del usuario usando Glide
                 Glide.with(ChatBotActivity.this).load(photoUrl).into(appIcon);
@@ -217,7 +218,9 @@ public class ChatBotActivity extends AppCompatActivity {
                             @Override
                             public void onResourceReady(Drawable resource, com.bumptech.glide.request.transition.Transition<? super Drawable> transition) {
                                 chatBody("Tu", query, resource);
-                                requestChatResponse(query, logoIcon);
+                                saveMessageToFirestore(userEmail, "user", query);
+                                requestChatResponse(query, logoIcon, userEmail);
+                                //requestChatResponse(query, logoIcon);
                             }
 
                             @Override
@@ -229,26 +232,79 @@ public class ChatBotActivity extends AppCompatActivity {
                 // Mostrar imagen predeterminada si el usuario no tiene foto de perfil
                 appIcon.setImageResource(R.drawable.man_user_circle_icon);
                 chatBody("Tu", query, getResources().getDrawable(R.drawable.man_user_circle_icon));
-                requestChatResponse(query, logoIcon);
+                //requestChatResponse(query, logoIcon);
+                saveMessageToFirestore(userEmail, "user", query);
+                requestChatResponse(query, logoIcon, userEmail);
             }
         }
     }
 
     // Método para solicitar una respuesta de chat al modelo de chat
-    private void requestChatResponse(String query, Drawable logoIcon) {
+    private void requestChatResponse(String query, Drawable logoIcon, String userEmail) {
         // Obtener respuesta del modelo de chat
         GeminiResp.getResponse(chatModel, query, new ResponseCallback() {
             @Override
             public void onResponse(String response) {
                 progressBar.setVisibility(View.GONE);
                 chatBody("EmotiiZoneIA", response, logoIcon);
+                saveMessageToFirestore(userEmail, "bot", response);
             }
 
             @Override
             public void onError(Throwable throwable) {
+                String errorMessage = "Por favor intenta nuevamente. Error: " + throwable.getMessage();
                 chatBody("EmotiiZoneIA", "Por favor intenta nuevamente. Error: " + throwable.getMessage(), logoIcon);
+                saveMessageToFirestore(userEmail, "bot", errorMessage);
                 progressBar.setVisibility(View.GONE);
             }
         });
+    }
+
+    private void saveMessageToFirestore(String userEmail, String sender, String message) {
+        String userName = auth.getCurrentUser().getDisplayName();
+        String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
+
+        db.collection("conversations")
+                .add(new Message(userEmail, userName, sender, message, date))
+                .addOnSuccessListener(documentReference -> Log.d("ChatBotActivity", "Mensaje guardado con ID: " + documentReference.getId()))
+                .addOnFailureListener(e -> Log.w("ChatBotActivity", "Error al guardar el mensaje", e));
+    }
+
+    // Clase Message para almacenar los datos del mensaje
+    public static class Message {
+        private String userEmail;
+        private String userName;
+        private String sender;
+        private String message;
+        private String date;
+
+        public Message(String userEmail, String userName, String sender, String message, String date) {
+            this.userEmail = userEmail;
+            this.userName = userName;
+            this.sender = sender;
+            this.message = message;
+            this.date = date;
+        }
+
+        // Getters necesarios para Firestore
+        public String getUserEmail() {
+            return userEmail;
+        }
+
+        public String getUserName() {
+            return userName;
+        }
+
+        public String getSender() {
+            return sender;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public String getDate() {
+            return date;
+        }
     }
 }

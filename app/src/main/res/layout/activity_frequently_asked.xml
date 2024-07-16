@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LineChartActivity">
+    tools:context=".FrequentlyAskedActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,7 +12,7 @@
         android:orientation="vertical">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toollinechart"
+            android:id="@+id/askedtoolChart"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/BlueNormal"
@@ -25,20 +25,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="10dp"
+            android:scrollbars="vertical"
             android:orientation="vertical">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="- Cambios de estados emocionales a lo largo del tiempo"
+                android:text="- Preguntas frecuentes realizados por los usuarios:"
                 android:gravity="center"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:textSize="18sp"  android:textStyle="bold"/>
-            <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/lineChart"
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/askedbarChart"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
         </LinearLayout>
     </LinearLayout>
 

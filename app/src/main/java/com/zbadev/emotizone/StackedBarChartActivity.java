@@ -49,9 +49,9 @@ public class StackedBarChartActivity extends AppCompatActivity {
         setSupportActionBar(toolbargroupedbarchart);
 
         // Cambiar el título del Toolbar
-        if (getSupportActionBar() != null) {
+        /*if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Cantidad de Registros por mes");
-        }
+        }*/
 
         // Inicializar Firestore
         db = FirebaseFirestore.getInstance();
