@@ -4,18 +4,22 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -90,17 +94,22 @@ public class PieChartActivity extends AppCompatActivity {
                     stateCounts.put("Ansiedad", 0);
                     stateCounts.put("Tristeza", 0);
 
+                    int totalCount = 0;
+
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         String state = document.getString("emotionalState");
                         stateCounts.put(state, stateCounts.get(state) + 1);
+                        totalCount++;
                     }
 
                     ArrayList<PieEntry> entries = new ArrayList<>();
                     for (Map.Entry<String, Integer> entry : stateCounts.entrySet()) {
-                        entries.add(new PieEntry(entry.getValue(), entry.getKey()));
+                        float percentage = (entry.getValue() * 100f) / totalCount;
+                        //entries.add(new PieEntry(percentage, entry.getKey()));
+                        entries.add(new PieEntry(entry.getValue().floatValue(), entry.getKey()));
                     }
 
-                    PieDataSet dataSet = new PieDataSet(entries, "Estados Emocionales");
+                    PieDataSet dataSet = new PieDataSet(entries, "");
 
                     // Definir colores personalizados para cada estado emocional
                     int[] colors = new int[]{
@@ -115,14 +124,29 @@ public class PieChartActivity extends AppCompatActivity {
                     dataSet.setColors(colors);
 
                     PieData data = new PieData(dataSet);
+                    data.setDrawValues(true);
+                    data.setValueTextSize(12f);
+                    data.setValueTextColor(Color.BLACK);
+                    data.setValueFormatter(new PercentFormatter(pieChart)); // Mostrar valores en porcentaje
                     pieChart.setData(data);
 
                     // Configurar leyendas
                     Legend legend = pieChart.getLegend();
                     legend.setForm(Legend.LegendForm.CIRCLE);
+                    pieChart.setCenterText("100%");
                     legend.setTextSize(12f);
                     legend.setFormSize(12f);
+                    legend.setFormToTextSpace(8f);
+
+                    legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+                    legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
+                    legend.setOrientation(Legend.LegendOrientation.VERTICAL);
+                    legend.setDrawInside(false);
                     legend.setXEntrySpace(5f);
+                    legend.setYEntrySpace(0f);
+                    legend.setYOffset(30f);
+                    legend.setXOffset(15f); // Ajusta el offset si es necesario
+                    legend.setWordWrapEnabled(true); // Habilitar ajuste de palabras
 
                     // Configurar descripciones
                     Description description = new Description();
@@ -130,7 +154,8 @@ public class PieChartActivity extends AppCompatActivity {
                     description.setTextSize(12f);
                     pieChart.setDescription(description);
 
-                    pieChart.invalidate(); // refrescar el gráfico
+                    pieChart.invalidate(); // Refrescar el gráfico
+                    pieChart.animateY(1400, Easing.EaseInOutQuad);
                 } else {
                     Log.w(TAG, "Error getting documents.", task.getException());
                 }
