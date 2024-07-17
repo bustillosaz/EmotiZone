@@ -14,7 +14,7 @@ import org.checkerframework.common.subtyping.qual.Bottom;
 public class GraphsActivity extends AppCompatActivity {
 
     Toolbar toolbar;
-    Button barChart, pieChart, lineChart, scatterChart, stackedBarChart, askedBarChart, horizontalBarChart;
+    Button barChart, pieChart, lineChart, scatterChart, stackedBarChart, askedBarChart, horizontalBarChart, radarchart;
 
 
     @Override
@@ -32,6 +32,7 @@ public class GraphsActivity extends AppCompatActivity {
         stackedBarChart = findViewById(R.id.stackedbarchart);
         askedBarChart = findViewById(R.id.askedchart);
         horizontalBarChart = findViewById(R.id.horizontalchart);
+        radarchart = findViewById(R.id.radarchart);
 
         barChart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +89,15 @@ public class GraphsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        radarchart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(GraphsActivity.this, RadarChartActivity.class); // Cambia "NuevaActividad" al nombre de tu nueva actividad
+                startActivity(intent);
+            }
+        });
+
 
     }
 }
